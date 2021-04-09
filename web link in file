@@ -1,0 +1,7 @@
+import requests
+
+with open('url_1.txt') as inf:
+    a = requests.get(inf.readline().strip()).text
+while ('We' in a) == False:
+        a = requests.get('https://stepik.org/media/attachments/course67/3.6.3/' + a).text
+print(a)
