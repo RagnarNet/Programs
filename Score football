@@ -1,0 +1,78 @@
+n = int(input())
+#vc = {}
+res = {}
+ito = {}
+
+while (n > 0):
+    num = 0
+    max_value = []
+    nc = 0
+    max_number = 0
+    vc = {}
+
+    str1 = input().split(';')
+    for i in range(len(str1)):
+        if (str1[i].isdigit()):                                      #Считываю строку по разделителям
+            continue
+        else:
+            vc[str1[i]] = str1[i + 1]
+
+
+    for key in vc:
+        max_value.append(int(vc[key]))
+
+
+    if(max_value[0] == max_value[1]):
+        nc = 1
+        max_number = max_value[0]
+    else:
+        max_number = max(max_value)
+
+
+    for key in vc:
+        if(key in ito):
+            continue
+        else:
+            ito[key] = [0,0,0,0,0] # Всего_игр Побед Ничьих Поражений Всего_очков
+
+    for key in vc:
+        #print(key)
+        if nc > 0:
+            ito[key][0] +=1
+            ito[key][2] += 1
+            ito[key][4] += 1
+
+        else:
+            if max_number == int(vc[key]):
+                ito[key][0] += 1
+                ito[key][1] += 1
+                ito[key][4] += 3
+            else:
+                ito[key][0] += 1
+                ito[key][3] += 1
+
+
+
+
+    #print(ito)
+
+
+    n -= 1
+
+
+for key in ito:
+    print(key, ':',ito[key][0],sep='',end=' ')
+    for val in range (1,len(ito[key])):
+        print(ito[key][val], end= ' ')
+    print()
+
+
+
+
+
+
+
+
+
+
+
