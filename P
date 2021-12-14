@@ -1,0 +1,129 @@
+#include <iostream>
+#include <vector>
+#include "Header.h"
+
+using namespace std;
+
+
+template<typename T>
+class List {
+private:
+    struct node {
+        node* next;
+        T value;
+
+        
+    };
+    node* head;
+    node* tail;
+public:
+    List() {
+        head = nullptr;
+        tail = nullptr;
+    }
+
+    void put(T value);
+
+    void print();
+
+    void delete_f();
+
+    void double_pos();
+
+
+};
+
+int main()
+{
+
+   List<double> list{};
+
+    list.put(-3);
+    list.put(-2);
+    list.put(-3);
+    list.put(-8);
+    list.put(-1);
+    list.put(55);
+
+
+    list.double_pos();
+    list.print();
+
+    
+}
+
+template<typename T>
+void List<T>::put(T val) {
+    node* new_node = new node;
+    new_node->value = val;
+    new_node->next = nullptr;
+
+    if (head == nullptr) {
+        head = new_node;
+        tail = new_node;
+    }
+    else {
+        tail->next = new_node;
+        tail = tail->next;
+    }
+
+
+}
+
+template<typename T>
+void List<T>::print()
+{
+    node* temp = head;
+    while (temp != nullptr) {
+        std::cout << temp->value << " ";
+        temp = temp->next;
+    }
+    //std::cout << temp->value << " ";
+}
+
+template<typename T>
+void List<T>::delete_f()
+{
+    node* temp = head;
+    if (temp->next->value == 55) {
+        node* save = head;
+        head = temp->next;
+        delete(save);
+        return;
+    }
+
+    while (temp != nullptr && temp->next->next != nullptr ) {
+        if (temp->next->next->value == 55) {
+            node* save = temp->next;
+            temp->next = temp->next->next;
+            delete(save);
+            break;
+        }
+        temp = temp->next;
+
+    }
+}
+
+template<typename T>
+inline void List<T>::double_pos()
+{
+    node* temp = head;
+
+    while (temp != nullptr) {
+        if (temp->value >0) {
+            node* save = new node;
+            save->value = temp->value;
+            //new_node->next = nullptr;
+
+            save->next = temp->next;
+            temp->next = save;
+            break;
+            
+        }
+
+        temp = temp->next;
+
+    }
+}
+
+
