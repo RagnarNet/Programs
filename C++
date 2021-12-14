@@ -1,707 +1,97 @@
-#pragma once
 #include <iostream>
-#define _USE_MATH_DEFINES
-#include <math.h> 
-#include <vector>
-#include <algorithm> 
-#include <iomanip>
-#include <string>
-#include <bitset>
-#include <numeric>
-#include <cmath>
-
-using namespace std;
-
-void f1() {
-
-    //Лаб. работа 1 на тему "Массивы и табулирование функции"
-
-    vector<double> array;
-    double y;
-
-    ofstream out;
-    out.open("C:\\Users\\Loken\\Desktop\\answer.txt");
-    if (out.is_open())
-    {
-        out << setw(10) <<  "x " << " |  " << setw(4) << "y" << endl;
-        for (double x = 0.15; x < 2.1; x += 0.075) {
-             y = x - 3 * pow(cos(1.04*x),2);
-             array.push_back(y);
-             out << '|' << setw(10) << x << '|' << setw(10) << y << '|' << endl;
-        }
 
 
-        sort(array.begin(), array.end());
-        int i = 0;
-        out << "Отсортированный массив: " << endl;
-        for (double a : array) {
-            out << "y" << i << ' = ' << a << " " << endl;
-            i++;
-        }
-
-    }
-}
-
-void g1() {
-
-    //Лаб. работа 1 на тему "Массивы и табулирование функции"
-
-    vector<double> array;
-    double y;
-
-    ofstream out;
-    out.open("C:\\Users\\Loken\\Desktop\\answer.txt");
-    if (out.is_open())
-    {
-        out << setw(10) << "x " << " |  " << setw(4) << "y" << endl;
-        for (double x = 0.1; x < 2.1; x += 0.075) {
-            y = pow(x,2) - x * M_PI * cos(M_PI * x);
-            array.push_back(y);
-            out << '|' << setw(10) << x << '|' << setw(10) << y << '|' << endl;
-        }
-
-
-        sort(array.begin(), array.end());
-        int k = 1;
-        out << "Отсортированный массив: " << endl;
-        for (double a : array) {
-            out << "y" << k  << " = " << a << endl;
-            k++;
-        }
-
-    }
-}
-
-
-void f2() {
-
-    //Лаб. работа 1 на тему "Одномерные массивы"
-
-    constexpr double e = 0.0000001;
-
-    ifstream file;
-    file.open("C:\\Users\\Loken\\Desktop\\mat.txt");
-
-    if (!file.is_open()) return;
-
-    double array[15];
-
-    for (int i = 0; i < 15; i++)
-        file >> array[i];
-
-    double num = array[0];
-    int ans = 0;
-
-    for (int i = 1; i < 15; i++)
-    {
-        if (array[i] - num > e)
-            ans++;
-
+template<typename T>
+class List {
+private:
+    struct node {
+        node* next;
+        T value;
+    };
+    node* head;
+    node* tail;
+public:
+    List() {
+        head = nullptr;
+        tail = nullptr;
     }
 
-    ofstream out;
-    out.open("C:\\Users\\Loken\\Desktop\\answer.txt");
-    if (out.is_open())
-    {
-        out << ans;
-    }
-}
+    void put(T value);
 
-void g2() {
+    void print();
 
-    //Лаб. работа 1 на тему "Одномерные массивы"
-
-    int sum = 0;
-
-    ifstream file;
-    file.open("C:\\Users\\Loken\\Desktop\\mat.txt");
-
-    if (!file.is_open()) return;
-
-    int array[17];
-
-    for (int i = 0; i < 17; i++)
-        file >> array[i];
-    for (int i = 0; i < 17; i++)
-    {
-        if (array[i] % 2 != 0) {
-
-            cout << array[i] << endl;
-            sum += array[i];
-        }
-    }
-
-    for (int i = 0; i < 17; i++)
-    {
-        if (array[i] % 3 == 0)
-            array[i] = sum;
-    }
-
-    ofstream out;
-    out.open("C:\\Users\\Loken\\Desktop\\answer.txt");
-    if (out.is_open())
-    {   
-        out << "sum = " << sum << endl;
-
-        for (int i = 0; i < 17; i++)
-            out << array[i] << ' ';
-    }
-
-}
-
-void f3() {
-    //Лаб. работа 2 на тему Двухмерные массивы
-    const int n = 4;
-    int m[n][n];
-    int numb = 0;
-    for (int counter = 0; counter < n; counter++) {
-        for (int i = counter; i < n - counter; ++i) m[i][counter] = ++numb;
-        for (int j = counter + 1; j < n - counter; ++j) m[n - counter - 1][j] = ++numb;
-        for (int i = n - counter - 2; i >= counter; --i) m[i][n - counter - 1] = ++numb;
-        for (int j = n - counter - 2; j > counter; --j) m[counter][j] = ++numb;
-    }
-
-    ofstream out;
-    out.open("C:\\Users\\Loken\\Desktop\\answer.txt");
-    if (out.is_open())
-    {
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < n; ++j) out << setw(3) << m[i][j];
-            out << endl;
-        }
-    }
-    
-}
-
-void g3() {
-    //Лаб. работа 2 на тему Двухмерные массивы
-    int i, j, k, sum = 1;
-    int b[5][5];
-
-    ifstream file;
-    file.open("C:\\Users\\Loken\\Desktop\\mat.txt");
-
-    if (!file.is_open()) return;
+    void delete_f();
 
 
-    for (int i = 0; i < 5; i++)
-        for (int j = 0; j < 5; j++)
-        {
-            file >> b[i][j];
-        }
-    for (int i = 0; i < 5; i++) {
-        for (int j = 0; j < 5; j++)
-            cout << b[i][j] << " ";
-        cout << endl;
-    }
+};
 
-        
-
-    for (i = 0; i < 4; ++i)
-        for (j = 0; j < 4; ++j)
-            if (i > j) sum *= b[i][j];
-
-    ofstream out;
-    out.open("C:\\Users\\Loken\\Desktop\\answer.txt");
-    if (out.is_open())
-    {
-        out <<  "Произведение элементов = " << sum;
-    }
-}
-
-void f4() {
-    ofstream out;
-    out.open("C:\\Users\\Loken\\Desktop\\answer.txt");
-    if (out.is_open())
-    {
-        double x = ((sqrt(8) + 15) / (sqrt(15) + 8)) + ((sqrt(6) + 12) / (sqrt(12) + 6)) + ((sqrt(7) + 21) / (sqrt(21) + 7));
-        out << "x = " << x;
-    }
-}
-
-void g4() {
-
-    vector<int> array;
-
-    for (int i = 2; i < 100; i++)
-    {
-        bool prime = true;
-        for (int j = 2; j * j <= i; j++)
-        {
-            if (i % j == 0)
-            {
-                prime = false;
-                break;
-            }
-        }
-
-        if (prime) array.push_back(i);
-    }
-    ofstream out;
-    out.open("C:\\Users\\Loken\\Desktop\\answer.txt");
-    if (out.is_open()) {
-        for (int a : array)
-            out << a << " ";
-    }
-
-}
-
-void f5() {
-
-    //Лаб. работа 1 на тему Двухмерные массивы
-
-    ifstream file;
-    file.open("C:\\Users\\Loken\\Desktop\\mat.txt");
-
-    if (!file.is_open()) return;
-
-    int myArray[3][4];
-    for (int i = 0; i < 3; i++)
-        for (int j = 0; j < 4; j++)
-            file >> myArray[i][j];
-
-
-
-    int* min1 = min_element(begin(myArray[0]), (myArray[0]));
-    int* min3 = min_element(begin(myArray[2]), (myArray[2]));
-    swap(*min1, *min3);
-
-
-    ofstream out;
-    out.open("C:\\Users\\Loken\\Desktop\\answer.txt");
-    if (out.is_open())
-    {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 4; j++)
-                out << myArray[i][j] << " ";
-            out << endl;
-
-        }
-
-    }
-
-}
-
-void g5() {
-
-    //Лаб. работа 1 на тему Двухмерные массивы
-
-    int n = 4, m = 4, index, index2;
-
-
-
-    ifstream file;
-    file.open("C:\\Users\\Loken\\Desktop\\mat.txt");
-
-    if (!file.is_open()) return;
-
-    int myArray[2][3];
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < m; j++)
-            file >> myArray[i][j];
-    int num = myArray[0][0];
-    index = 0;
-    index2 = 0;
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < m; j++) {
-            if (num > myArray[i][j]) {
-                num = myArray[i][j];
-                index = i;
-                index2 = j;
-            }
-        }
-    }
-
-
-
-
-    ofstream out;
-    out.open("C:\\Users\\Loken\\Desktop\\answer.txt");
-    if (out.is_open())
-    {
-        out << "i = " << index << " j = " << index2;
-    }
-
-
-}
-
-double perimeter(int a, int b, int h)
+int main()
 {
-    //Лабораторная работа 1 на тему Функции
 
-    double x = (a - b) / 2;
-    double pif = sqrt(pow(x, 2) + pow(h, 2));
+List<double> list{};
 
-    return pif + pif + a + b;
-
-}
-
-int min(int a, int  b) {
-    //Лабораторная работа 1 на тему Функции
-    if (a < b)
-        return a;
-    return b;
-}
+    list.put(21);
+    list.put(64);
+    list.put(3);
+    list.put(8);
+    list.put(1);
+    list.put(55);
 
 
-int res(int x, int y) {
-    //Лабораторная работа 1 на тему Функции
-    return x + y;
-}
-
-void f6() {
-
-    //Лаб. работа 2 на тему Одномерные массивы
-
-    double array[16];
-
-    double sum = 0;
-    double sum2 = 0;
-
-    ifstream file;
-    file.open("C:\\Users\\Loken\\Desktop\\mat.txt");
-
-    if (!file.is_open()) return;
-
-    int myArray[2][3];
-    for (int i = 0; i < 16; i++)
-            file >> array[i];
-
-    for (int i = 0; i < 16; i++) {
-        if (i % 2 == 0)
-            sum += array[i];
-        else
-            sum2 += array[i];
-    }
-
-    ofstream out;
-    out.open("C:\\Users\\Loken\\Desktop\\answer.txt");
-    if (out.is_open())
-    {
-        out << "Разность = " << sum - sum2;
-    }
-
-}
-
-void g6() {
-
-    //Лаб. работа 2 на тему Одномерные массивы
-
-    double array[14];
-
-    ifstream file;
-    file.open("C:\\Users\\Loken\\Desktop\\mat.txt");
-
-    if (!file.is_open()) return;
-
-    for (int i = 0; i < 14; i++)
-        file >> array[i];
-
-    int n = 14, m, k;
-    double t;
-
-    m = n / 2;
-    if (n % 2) k = m + 1;
-    else       k = m;
-    for (int i = 0; i < m; i++) {
-        t = array[i];
-        array[i] = array[k + i];
-        array[k + i] = t;
-    }
-
-    ofstream out;
-    out.open("C:\\Users\\Loken\\Desktop\\answer.txt");
-    if (out.is_open())
-    {
-        for (int i = 0; i < 14; i++)
-            out <<  array[i] << " ";
-    }
-}
-
-void f7() {
-
-    //Лаб. работа 3 на тему Одномерные массивы
-
-    int array[15];
-
-    ifstream file;
-    file.open("C:\\Users\\Loken\\Desktop\\mat.txt");
-
-    if (!file.is_open()) return;
-
-
-    for (int i = 0; i < 15; i++)
-        file >> array[i];
-
-    for (int i = 0; i < 15; i++) {
-        array[i] = (array[i] % 10) * 10 + array[i]/10;
-
-    }
-
-    ofstream out;
-    out.open("C:\\Users\\Loken\\Desktop\\answer.txt");
-    if (out.is_open())
-    {
-        for (int i = 0; i < 15; i++)
-            out << array[i] << " ";
-    }
-}
-
-void g7() {
-
-    //Лаб. работа 3 на тему Одномерные массивы
-
-    vector<string> array;
-    vector<int> array_2;
- 
-
-
-    ifstream file;
-    file.open("C:\\Users\\Loken\\Desktop\\mat.txt");
-
-    if (!file.is_open()) return;
-    string num;
-
-    for (int i = 0; i < 6; i++) {
-        file >> num;
-        array.push_back(num);
-    }
-
-    for (string a : array) {
-        array_2.push_back(stoi(a, nullptr, 2));
-
-    }
-
-    sort(array_2.begin(), array_2.end(), greater<>());
-
-    for (int i = 0; i < array_2.size(); i++) {
-        array[i] = bitset<32>(array_2[i]).to_string();
-    }
-
-    int counter = 0;
-    string s;
-    for (string& a : array) {
-        for (int i = 0; i < a.length(); i++) {
-            if (a[i] != '1')
-                ++counter;
-            else {
-                //s = a.substr(counter, a.length());
-                a = a.substr(counter, a.length());
-                //cout << s << endl;
-                counter = 0;
-                continue;
-            }
-        }
-    }
-
-
-    ofstream out;
-    out.open("C:\\Users\\Loken\\Desktop\\answer.txt");
-    if (out.is_open())
-    {
-        for (string a : array)
-            out << a << " ";
-        out << endl;
-        out << "Сумма элементов = " << accumulate(array_2.begin(), array_2.end(), 0);
-
-    }
-
+    list.delete_f();
+    list.print();
 
     
+        }
+
+template<typename T>
+void List<T>::put(T val) {
+    node* new_node = new node;
+    new_node->value = val;
+    new_node->next = nullptr;
+
+    if (head == nullptr) {
+        head = new_node;
+        tail = new_node;
+    }
+    else {
+        tail->next = new_node;
+        tail = tail->next;
+    }
+
+
 }
 
-int sumnum(int a)
+template<typename T>
+void List<T>::print()
 {
-    int sum = 0, x = a;
-    while (x > 0)
-    {
-        sum += x % 10;
-        x /= 10;
+    node* temp = head;
+    while (temp != nullptr) {
+        std::cout << temp->value << " ";
+        temp = temp->next;
     }
-    return sum;
+    //std::cout << temp->value << " ";
 }
 
-void f8() {
-
-    //Лаб. работа 2 на тему Функции
-
-    vector<int> array;
-    for (int i = 100000; i < 1000000; i++)
-        if (sumnum(i % 1000) == sumnum(i / 1000))
-            array.push_back(i);
-
-
-    ofstream out;
-    out.open("C:\\Users\\Loken\\Desktop\\answer.txt");
-    if (out.is_open())
-    {
-        for (int a : array)
-            out << a << " ";
-
+template<typename T>
+void List<T>::delete_f()
+{
+    node* temp = head;
+    if (temp->next->value == 55) {
+        node* save = head;
+        head = temp->next;
+        delete(save);
+        return;
     }
-}
 
-void g8(int array[], int n) {
-
-    //Лаб. работа 2 на тему Функции
-
-    for (int i = 0; i < n; i++)
-        cout << array[i] << " ";
-
-
-    for (int i = 1; i < n; ++i)
-    {
-        for (int r = 0; r < n - i; r++)
-        {
-            if (array[r] < array[r + 1])
-            {
-                // Обмен местами
-                int temp = array[r];
-                array[r] = array[r + 1];
-                array[r + 1] = temp;
-            }
+    while (temp != nullptr && temp->next->next != nullptr ) {
+        if (temp->next->next->value == 55) {
+            node* save = temp->next;
+            temp->next = temp->next->next;
+            delete(save);
+            break;
         }
-    }
-
-    ofstream out;
-    out.open("C:\\Users\\Loken\\Desktop\\answer.txt");
-    if (out.is_open())
-    {
-        for (int i = 0; i < n; i++)
-            out << array[i] << " ";
+        temp = temp->next;
 
     }
 }
-
-void f9() {
-
-    //Лаб. работа 2 на тему Массивы и табулирование функции
-
-    double y;
-
-    ofstream out;
-    out.open("C:\\Users\\Loken\\Desktop\\answer.txt");
-    if (out.is_open())
-    {
-        out << setw(10) << "x " << " |  " << setw(4) << "y" << endl;
-        for (double x = M_PI; x <= 2 * M_PI; x += 0.075) {
-            if (x > 3.61) {
-                y = exp(-x - 0.8);
-                out << '|' << setw(10) << x << '|' << setw(10) << y << '|' << endl;
-            }
-            else if (x < 0) {
-                y = 0.5 * x;
-                out << '|' << setw(10) << x << '|' << setw(10) << y << '|' << endl;
-            }
-            else {
-                y = 1;
-                out << '|' << setw(10) << x << '|' << setw(10) << y << '|' << endl;
-            }
-
-        }
-    }
-}
-
-void g9() {
-    //Лаб. работа 2 на тему Массивы и табулирование функции
-
-    double y;
-
-    ofstream out;
-    out.open("C:\\Users\\Loken\\Desktop\\answer.txt");
-    if (out.is_open())
-    {
-        out << setw(10) << "x " << " |  " << setw(4) << "y" << endl;
-        for (double x = (-M_PI)/2; x <= 2 * M_PI; x += 0.075) {
-            if (x > 2.5) {
-                y = x-2;
-                out << '|' << setw(10) << x << '|' << setw(10) << y << '|' << endl;
-            }
-            else if (x < 0) {
-                y = x * log(cos(x));
-                out << '|' << setw(10) << x << '|' << setw(10) << y << '|' << endl;
-            }
-            else {
-                y = 1 + x*x;
-                out << '|' << setw(10) << x << '|' << setw(10) << y << '|' << endl;
-            }
-
-        }
-    }
-}
-
-void f10() {
-    //Лаб. работа 3 на тему Массивы и табулирование функции
-
-    double y;
-
-    ofstream out;
-    out.open("C:\\Users\\Loken\\Desktop\\answer.txt");
-    if (out.is_open())
-    {
-        out << setw(10) << "x " << " |  " << setw(4) << "y" << endl;
-        for (double x = 0; x <= 4; x += 0.4) {
-            if (x < 1.5) {
-                y = 1.5 + log(sin(x*x - x + 1));
-                out << '|' << setw(10) << x << '|' << setw(10) << y << '|' << endl;
-            }
-            else if (x > 2.5) {
-                y = 1.5 + log(sin(pow(sin(x-1),3) + cos(x+1)));
-                out << '|' << setw(10) << x << '|' << setw(10) << y << '|' << endl;
-            }
-            else {
-                y = atan(x);
-                out << '|' << setw(10) << x << '|' << setw(10) << y << '|' << endl;
-            }
-
-        }
-    }
-
-}
-
-
-int fact(int n) {
-
-    return (n == 0) || (n == 1) ? 1 : n * fact(n - 1);
-}
-
-void g10() {
-
-    //Лаб. работа 3 на тему Массивы и табулирование функции
-    
-
-    const double E = 0.0000001;
-
-    double y = 0.0;
-
-    bool flag = true;
-
-    int k;
-
-    ofstream out;
-    out.open("C:\\Users\\Loken\\Desktop\\answer.txt");
-    if (out.is_open())
-    {
-        out << setw(10) << "x " << " |  " << setw(4) << "y" << endl;
-        for (double x = 1.0; 2.1 - fabs(x) > std::numeric_limits<double>::epsilon(); x += 0.1) {
-            cout << "fabs = " << 2.0 - fabs(x) <<  endl;
-            k = 1;
-            cout << x << endl;
-            flag = true;
-            while (flag) {
-                if (pow(x, 2 * k) / fact(2 * k) > E) {
-                    y = (pow(x, 2 * k)) / (fact(2 * k));
-                    out << '|' << setw(10) << x << '|' << setw(10) << y << '|' << endl;
-                    ++k;
-                }
-                else {
-                    flag = false;
-                }
-            }
-
-        }
-    
-    }
-
-}
-
